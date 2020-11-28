@@ -1,4 +1,4 @@
-repl-build.out: Completion_Designer.c SeiveAnalysis.c
+repl-build.out: Completion_Designer.c GravelPackSlotSize.c
 	 gcc -o $@ $^
 
 .PHONY: run

@@ -1,5 +1,8 @@
 #include <stdio.h>
 
+//function to determine the Gravel Pack Size
+//Median Gravel Pack Grain Size = (between 5 or 6) * Median Formation Grain Size
+//standad_gravel_pack_sizes.txt is an editable text file for available gravel pack information
 int findGravelPackSize(double smallestGrainSize)
 {
 	FILE *fp = NULL;
@@ -25,6 +28,7 @@ int findGravelPackSize(double smallestGrainSize)
 
 	fclose(fp);
 
+	//used 5* instead of 6* because this is the worst case scenario and gravel packs should be designed for worst case scenarios
   i = 0;
 	while(standardGravelPackMedianGrainSize[i] > 5 * smallestGrainSize && i < 5)
 	{
@@ -36,6 +40,9 @@ int findGravelPackSize(double smallestGrainSize)
 	return gravelPackSizeInteger;
 }
 
+
+//function to determin Slot Width based off of gravel pack Size
+//standard_slot_widths.txt is a editable file to input available slot sizes
 int findSlotWidth(int gravelPackSizeInteger)
 {
 	FILE *fp = NULL;
@@ -84,12 +91,14 @@ int findSlotWidth(int gravelPackSizeInteger)
 
 	fclose(fp);
 
+	//desired slot width is .5 * Median Gravel Pack Size rounded down to the next available slot size for worst case scenario.
 	i = 0;
 	while(standardSlotWidths[i] > .5 * medianGravelPackSize && i < 8)
 	{
 		i++;
 	}
 
+	//convert slot size inches to standard slot mesh size
 	slotWidth = 1000 * standardSlotWidths[i];
 
 	return slotWidth;

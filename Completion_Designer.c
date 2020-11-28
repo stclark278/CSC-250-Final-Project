@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "SeiveAnalysis.h"
+#include "GravelPackSlotSize.h"
 
 
 struct seive_analysis_def
@@ -29,23 +29,24 @@ int main(int argc, char *argv[])
 	FILE *ifp = NULL;
 	FILE *ofp = NULL;
 	int numberWells;
-	char wellName[10][50];
-	char fieldName[10][50];
-	char APINumber[10][20];
 	int numberSeiveData[10];
 	double medianGrainSize[10];
 	double smallestGrainSize = 1;
 	int i;
 	int gravelPackSizeInteger;
 	char gravelPackSizeString[50];
+	char buffer[50];
 	int slotWidth;
 
+
+	//check to see if the input and output files were entered on the command line
 	if (argc != 3)
 	{
 		printf("Syntax Error: Expected Input ./<exec> <inFile> <outFile>\n");
 		exit(1);
 	}
 
+	//check to see if the input file can be read
 	ifp = fopen(argv[1], "r");
 	if (ifp == NULL)
 	{
@@ -53,9 +54,15 @@ int main(int argc, char *argv[])
 		exit(1);
 	}
 
+	//scan in the number of wells to analyze
+	//declare the 2D arrays to hold the well data
 	fscanf(ifp, "%d", &numberWells);
 	seive seiveData[numberWells][34];
+	char wellName[numberWells][50];
+	char fieldName[numberWells][50];
+	char APINumber[numberWells][20];
 
+	//scan in well data from input file	
 	for (i = 0; i < numberWells; i++)
 	{
 		fscanf(ifp, "%s", wellName[i]);
@@ -65,11 +72,13 @@ int main(int argc, char *argv[])
 	}
 	fclose(ifp);
 
+	//convert standard seive size to inches to find the grain size distribution
 	for (i = 0; i < numberWells; i++)
 	{
 		seiveSizeToInches(seiveData[i], numberSeiveData[i]);
 	}
 
+	//find the median grain size of the samples to use to determain gravel pack size
 	for (i = 0; i < numberWells; i++)
 	{
 		medianGrainSize[i] = findMedianGrainSize(seiveData[i], numberSeiveData[i]);
@@ -84,6 +93,8 @@ int main(int argc, char *argv[])
 		}
 	}
 
+
+	//determine the gravel pack size using the header file attached
 	gravelPackSizeInteger = findGravelPackSize(smallestGrainSize);
 
 	if (gravelPackSizeInteger < 0)
@@ -91,29 +102,25 @@ int main(int argc, char *argv[])
 		exit(1);
 	}
 
-	sprintf(gravelPackSizeString, "%d", gravelPackSizeInteger);
+	sprintf(buffer, "%d", gravelPackSizeInteger);
+	
 
 	//formats the string to standard representation of Gravel Pack size
-	if (gravelPackSizeString[0] == '8')
+	if (strlen(buffer) < 4)
 	{
-		gravelPackSizeString[6] = '\0';
-		gravelPackSizeString[5] = gravelPackSizeString[2];
-		gravelPackSizeString[4] = gravelPackSizeString[1];
-		gravelPackSizeString[3] = ' ';
-		gravelPackSizeString[2] = 'X';
-		gravelPackSizeString[1] = ' ';
-
+		strncpy(gravelPackSizeString, buffer, 1);
+		strcat(gravelPackSizeString, " X ");
+		strcat(gravelPackSizeString, &buffer[1]);
 	}
+
 	else
 	{
-		gravelPackSizeString[7] = '\0';
-		gravelPackSizeString[6] = gravelPackSizeString[3];
-		gravelPackSizeString[5] = gravelPackSizeString[2];
-		gravelPackSizeString[4] = ' ';
-		gravelPackSizeString[3] = 'X';
-		gravelPackSizeString[2] = ' ';
+		strncpy(gravelPackSizeString, buffer, 2);
+		strcat(gravelPackSizeString, " X ");
+		strcat(gravelPackSizeString, &buffer[2]);
 	}
 
+	//determine slotted liner slot size using the header file attached
 	slotWidth = findSlotWidth(gravelPackSizeInteger);
 
 	if (gravelPackSizeInteger < 0)
@@ -121,6 +128,7 @@ int main(int argc, char *argv[])
 		exit(1);
 	}
 
+	//print out the report
 	ofp = fopen(argv[2], "w");
 
 	fprintf(ofp, "Based on the data provided form the following wells:\n");
@@ -166,6 +174,8 @@ int main(int argc, char *argv[])
 	return 0;
 }
 
+
+//function to read in the seive analysis data from the input file
 int readSeiveData(FILE *ifp, seive seiveData[])
 {
 	int numberSeiveData = 0;
@@ -182,6 +192,8 @@ int readSeiveData(FILE *ifp, seive seiveData[])
 	return numberSeiveData;
 }
 
+
+//function to convert the seive sizes read in to inches using the attached standard_seive_sizes.txt file
 void seiveSizeToInches(seive seiveData[], int numberSeiveData)
 {
 	FILE *fp = NULL;
@@ -219,6 +231,7 @@ void seiveSizeToInches(seive seiveData[], int numberSeiveData)
 	return;
 }
 
+//find the median grain size of the sample analyses given
 double findMedianGrainSize(seive *seiveData, int numberSeiveData)
 {
 	double medianGrainSize;
