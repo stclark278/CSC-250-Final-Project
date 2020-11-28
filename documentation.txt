@@ -1,0 +1,47 @@
+Thank you for choosing to use my Completion Designer Program.  The program uses
+the following .txt files to work.
+
+input.txt - this file needs to be entered as a COMMAND LINE ARGUEMENT.  The format
+for this file can be seen in the input_format_description.txt file.  Using this file
+format can allow for the anaysis of multiple seive analyses from across your field to
+determine the proper gravel pack and slot size for a new drilling program.
+
+output.txt - this file needs to be entered as a COMMAND LINE ARGUEMENT.  This will be
+your report of the analysis that will show your worst case scenario grain size as
+well as the recommendation of the properly sized gravel pack and slot size based
+on the entered data.
+
+standard_gravel_pack_sizes.txt - this file is used in the functions in the HEADER
+FILE GravelPackSlotSize.h.  This file can be edited for the available sizes of
+gravel pack sand at the time of analysis.  The data required is a mesh size of the
+gravel pack as one integer ie. (12 X 20 = 1220) followed by a space followed by the
+median grain size of the gravel.  Ensure to keep sizes in order of largest to
+smallest.
+
+standard_slot_widths.txt - this file is used in the functions in the HEADER FILE 
+GravelPackSlotSize.h.  This file can be edited for the available sizes of slots.
+To edit just put the slot size in decimal format ie. (40 Mesh = 0.040) on a line.
+Ensure to keep sizes in order of largest to smallest.
+
+stantdard_seive_sizes.txt - this file is used in the functions in the main
+CompletionDesigner.c file.  This file is a list of standard seive files and their
+size in inches.  This file can be edited for differnt sizes.  To edit put the 
+standard seive size followed by a space followed by the seive size in decimal inches
+ie.(10 0.0787).  Ensure to keep sizes in order of largest to smallest.
+
+To determine the proper sizes the general rule of Median Grain Size of Gravel Pack is
+between 5-6 times the Median Grain Size of Formation Sand.  The desired slot size is
+1/2 the size of the Median Grain Size of Gravel Pack, this is rounded down to the 
+next available size.  The worst case scenario is used for all of these to ensure the
+best case scenario for sand control in your wells.
+
+Topics to be Graded on:
+Use of Command Line Arguements for the input and output files.
+Use of Header file to use equations written in a seperate C file.
+Use of multiple 2D arrays to store data.
+Use of structures to store data.
+Use of Input and Output files to store editable data to use in the program.
+Use of strcpy and strcat to format strings to desired format.
+
+Thank you,
+Steven Clark

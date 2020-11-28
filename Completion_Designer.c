@@ -1,3 +1,7 @@
+//Completion Desigener Program
+//By Steven Clark
+//CSC 250 Fall Term 2020
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
