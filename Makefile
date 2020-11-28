@@ -1,11 +1,9 @@
-repl-build.out: csc-150-review_template.c
-	# gcc -o $@ $^
-	echo "modify repl-build.out in the Makefile to make this button work"
+repl-build.out: Completion_Designer.c SeiveAnalysis.c
+	 gcc -o $@ $^
 
 .PHONY: run
-run: repl-build.out
-	# ./$^
-	echo "modify run in the Makefile to make this button work"
+run: repl-build.out input.txt output.txt
+	 ./$^
 
 .PHONY: clean
 
