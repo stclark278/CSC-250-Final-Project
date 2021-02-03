@@ -1,0 +1,7 @@
+Well_Name
+Field_Name
+API_Number
+Number_Of_Seive_Data_Points
+SeiveSizeLargest %PassingLargest
+SeiveSizeNextLargest %PassingNextLargets
+SeiveSizeSmallest %PassingSmallest
