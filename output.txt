@@ -1,0 +1,24 @@
+Based on the data provided form the following wells:
+----------------------------------------------------------------------
+Section_14_USL_35
+Kern_Front_Field
+04-030-38104
+
+Section_14_USL_49
+Kern_Front_Field
+04-030-42105
+
+
+The following worst case scenario was found:
+----------------------------------------------------------------------
+The smallest formation median grain size was:  0.0098
+
+
+Based on this I recommend using the following completion design:
+----------------------------------------------------------------------
+Gravel Pack Size: 12 X 20
+Slotted Liner Size: 20 Mesh
+
+
+Thank you for using the Completion Designer Program!!
+Have a wonderful day!!
